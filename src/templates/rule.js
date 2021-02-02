@@ -76,7 +76,15 @@ const Rule = ({ data, location }) => {
         <section className="rule-content mb-20 p-12 pt-0">
           <div className="rule-header-container">
             <h1>{rule.frontmatter.title}</h1>
-            <Bookmark ruleId={rule.frontmatter.guid} />
+            {userManager && (
+                <AuthProvider
+                  userManager={userManager}
+                  onSignIn={onRedirectCallback}
+                  autoSignIn={false}
+                >
+                  <Bookmark ruleId={rule.frontmatter.guid} />
+                </AuthProvider>
+              )}
           </div>
           {data.history && data.history.nodes[0] && (
             <small className="history">

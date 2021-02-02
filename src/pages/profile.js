@@ -11,7 +11,7 @@ import { useAuth } from 'oidc-react';
 const Profile = ({ data }) => {
   const [selectedFilter, setSelectedFilter] = useState(1);
   const [listChange, setListChange] = useState(0);
-  const { userData } = useAuth();
+  const userData  = useAuth();
   const [bookmarkedRulesCount, setBookmarkedRulesCount] = useState();
   const [likedRulesCount, setLikedRulesCount] = useState();
   const [dislikedRulesCount, setDislikedRulesCount] = useState();
