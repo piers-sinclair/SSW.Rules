@@ -5,6 +5,67 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+const myQuery = `
+pages {
+  categories: allMarkdownRemark(
+    filter: { frontmatter: { type: { eq: "category" } } }
+  ) {
+    nodes {
+      fields {
+        slug
+      }
+      frontmatter {
+        index
+      }
+      parent {
+        ... on File {
+          name
+          relativeDirectory
+        }
+      }
+    }
+  }
+  rules: allMarkdownRemark(
+    filter: {
+      frontmatter: { type: { nin: ["category", "top-category", "main"] } }
+    }
+  ) {
+    nodes {
+      fields {
+        slug
+      }
+      frontmatter {
+        uri
+        guid
+        archivedreason
+        related
+        redirects
+      }
+    }
+  }
+}
+`;
+
+const queries = [
+  {
+    query: myQuery,
+    transformer: ({ data }) => data.pages.rules.nodes.map(pageToAlgoliaRecord), // optional
+    indexName: 'SSW_Rules', // overrides main index name, optional
+    settings: {
+      // optional, any index settings
+      // Note: by supplying settings, you will overwrite all existing settings on the index
+    },
+  },
+];
+
+function pageToAlgoliaRecord(fields, frontmatter) {
+  return {
+    objectID: frontmatter.guid,
+    ...fields,
+    ...frontmatter,
+  };
+}
+
 module.exports = {
   pathPrefix: `${siteConfig.pathPrefix}`,
   siteMetadata: {
@@ -174,6 +235,15 @@ module.exports = {
       options: {
         // replace "UA-XXXXXXXXX-X" with your own Tracking ID
         trackingId: process.env.GOOGLE_ANALYTICS,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-algolia',
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        indexName: 'SSW_Rules',
+        queries,
       },
     },
   ],
