@@ -1112,7 +1112,7 @@ div.bad-example .custom-block-heading::after {
   padding-right: 0.5rem;
   position: absolute;
   left: 0px;
-  top:0px;
+  top: 2px;
 }
 
 .ok-example figure figcaption::after,
@@ -1168,12 +1168,16 @@ div.greybox {
   margin-bottom: 1rem;
 }
 
+.twitter-tweet-rendered {
+  margin-bottom: 0 !important;
+}
+
 .twitter-tweet-rendered iframe {
   background-color: transparent !important;
   box-sizing: unset;
 }
 
-.rule-content video, .rule-content iframe:not(.utterances-frame) {
+.rule-content video, .rule-content iframe:not(.utterances-frame):not(.twitter-tweet-rendered iframe) {
   background-color: #f5f5f5;
   padding: 4px;
   margin-bottom: 1rem;
