@@ -30,6 +30,20 @@ jobs:
           app_location: "/" # App source code path
           api_location: "api" # Api source code path - optional
           output_location: "rules" # Built app content directory - optional
+        env:
+          GOOGLE_ANALYTICS:  ${{ secrets.GOOGLE_ANALYTICS }}
+          RECAPTCHA_KEY:  ${{ secrets.RECAPTCHA_KEY }}
+          CONTACT_API:  ${{ secrets.CONTACT_API }}
+          VERSION_DEPLOYED:  ${{ secrets.VERSION_DEPLOYED }}
+          APPINSIGHTS_INSTRUMENTATIONKEY:  ${{ secrets.APPINSIGHTS_INSTRUMENTATIONKEY }}
+          CONTENT_BRANCH: ${{ secrets.CONTENT_BRANCH }}
+          API_BASE_URL:  ${{ secrets.API_BASE_URL }}
+          AUTH0_DOMAIN:  ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID:  ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_REDIRECT_URI:  ${{ secrets.AUTH0_REDIRECT_URI }}
+          GITHUB_API_PAT:  ${{ secrets.GITHUB_API_PAT }}
+          DISQUS_FORUM:  ${{ secrets.DISQUS_FORUM }}
+          DISQUS_API_KEY:  ${{ secrets.DISQUS_API_KEY }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
